@@ -1,5 +1,6 @@
 package com.exilant.day2;
 
+import java.awt.dnd.DragGestureRecognizer;
 import java.util.Collections;
 import java.util.IntSummaryStatistics;
 import java.util.List;
@@ -29,6 +30,17 @@ public static void main(String[] args) {
 	sumOFDragans.forEach((k,v)->{
 		System.out.println("dragon name:"+k+",no of dragons :"+v);
 	});
+	
+	
+	//.filter(dragon->{
+	//	if(dragon.getCountry().equals("USA"))return true;
+	//	else return false;
+	//})
+  
+	
+	//1.TODO
+	//write java 8 snippet to find the stats of the dragonlist
+	//should display  sum/average/min/max/avg of dragons,
 	IntSummaryStatistics s=dragonslist.stream().collect(Collectors.summarizingInt(Dragons::getCount));
 	//System.out.println(dragonslist.stream().collect(Collectors.averagingInt(Dragons::getCount)).longValue());
 	System.out.println(s.getAverage());
@@ -36,19 +48,12 @@ public static void main(String[] args) {
 	System.out.println(s.getMin());
 	System.out.println(s.getSum());
 	
-	dragonslist.stream().filter(dragon->{
-		if(dragon.getCountry().equals("USA"))return true;
-		else return false;
-	}).forEach(System.out::println);
-	
-	//TODO
-	//write java 8 snippet to find the stats of the dragonlist
-	//should display  sum/average/min/max/avg of dragons,
 	
 	//2.TODO
 	//find dragons by country and keep the names of dragons
 	//of difrent countries in the list/set
-	
+	dragonslist.stream().collect(Collectors.groupingBy(Dragons::getCountry,Collectors.mapping(Dragons::getNames, Collectors.toList()))).forEach((k,v)->System.out.println(k+"-"+v));
+
 	
 	
 }
